@@ -1,4 +1,4 @@
-const { calculate } = require('../calculator');
+const { calculate, modulo, power, squareRoot } = require('../calculator');
 
 describe('calculator', () => {
   describe('addition', () => {
@@ -61,6 +61,47 @@ describe('calculator', () => {
     });
   });
 
+  describe('modulo', () => {
+    test('returns the remainder of two numbers', () => {
+      expect(modulo(10, 3)).toBe(1);
+    });
+
+    test('handles negative operands', () => {
+      expect(modulo(-10, 3)).toBe(-1);
+    });
+
+    test('rejects modulo by zero', () => {
+      expect(() => modulo(10, 0)).toThrow('Modulo by zero is not allowed.');
+    });
+  });
+
+  describe('power', () => {
+    test('raises a base to an exponent', () => {
+      expect(power(2, 3)).toBe(8);
+    });
+
+    test('supports zero and negative exponents', () => {
+      expect(power(5, 0)).toBe(1);
+      expect(power(2, -2)).toBe(0.25);
+    });
+  });
+
+  describe('square root', () => {
+    test('returns the square root of a number', () => {
+      expect(squareRoot(81)).toBe(9);
+    });
+
+    test('returns zero for zero', () => {
+      expect(squareRoot(0)).toBe(0);
+    });
+
+    test('rejects square root of a negative number', () => {
+      expect(() => squareRoot(-1)).toThrow(
+        'Square root of a negative number is not allowed.',
+      );
+    });
+  });
+
   describe('input validation', () => {
     test('rejects non-finite operands', () => {
       expect(() => calculate(Number.NaN, '+', 1)).toThrow(
@@ -72,8 +113,8 @@ describe('calculator', () => {
     });
 
     test('rejects unsupported operators', () => {
-      expect(() => calculate(2, '%', 3)).toThrow(
-        'Supported operators are +, -, *, and /.',
+      expect(() => calculate(2, '&', 3)).toThrow(
+        'Supported operators are +, -, *, /, %, and ^.',
       );
     });
   });

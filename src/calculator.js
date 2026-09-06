@@ -1,9 +1,30 @@
 #!/usr/bin/env node
 
 /**
- * A CLI calculator supporting the four basic arithmetic operations:
- * addition (+), subtraction (-), multiplication (*), and division (/).
+ * A CLI calculator supporting basic arithmetic and extended operations:
+ * addition (+), subtraction (-), multiplication (*), division (/),
+ * modulo (%), power (^), and square root (sqrt).
  */
+
+function modulo(left, right) {
+  if (right === 0) {
+    throw new Error('Modulo by zero is not allowed.');
+  }
+
+  return left % right;
+}
+
+function power(base, exponent) {
+  return base ** exponent;
+}
+
+function squareRoot(value) {
+  if (value < 0) {
+    throw new Error('Square root of a negative number is not allowed.');
+  }
+
+  return Math.sqrt(value);
+}
 
 const operations = {
   '+': (left, right) => left + right,
@@ -16,6 +37,8 @@ const operations = {
 
     return left / right;
   },
+  '%': modulo,
+  '^': power,
 };
 
 function calculate(left, operator, right) {
@@ -25,7 +48,7 @@ function calculate(left, operator, right) {
 
   const operation = operations[operator];
   if (!operation) {
-    throw new Error('Supported operators are +, -, *, and /.');
+    throw new Error('Supported operators are +, -, *, /, %, and ^.');
   }
 
   return operation(left, right);
@@ -54,4 +77,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { calculate };
+module.exports = { calculate, modulo, power, squareRoot };
